@@ -3,7 +3,50 @@
 <html lang="en">
 <head>
     <style>
-        
+        #form{
+            width: 90%;
+            margin: auto;
+        }
+        body{
+            text-align: center;
+        }
+        h3{
+            text-align: left;
+         
+        }
+        #jsonInput {
+            margin: 10px auto;
+            width: 100%; /* Make the textarea fill the width of the form */
+            height: 30vh; /* 50% of the viewport height */
+        }
+        #method{
+            width: 10%;
+            height:20px;
+        }
+        #product{
+            width: 10%;
+            height:20px; 
+        }
+        #header{
+            width: 20%; 
+            height:15px;
+        }
+        h4{
+            display: inline;
+            width:45%
+        }
+        #response{
+            height: 70vh;
+            width: 90%; 
+            margin: 10px auto;
+        }
+        p{
+            border: 1px solid black;
+            height: 100%;
+            width: 100%; 
+            text-align: left;
+           
+        }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,6 +64,7 @@
                 <option value="PUT">PUT</option>
                 <option value="DELETE">DELETE</option>
             </select>
+            <h4>http://localhost:8000/</h4>
             <select id="product" name="product">
                 <option>Select an option</option>
                 <option value="Acara">Acara</option>
@@ -36,16 +80,20 @@
                 <option value="Add_Pembicara">Add Pembicara</option>
                 <option value="Rapat">Rapat</option>
             </select>
-            <input id="header" name="header">
-            <br>
-            <textarea id="jsonInput" rows="10" cols="50"></textarea>
-            <br>
-            <button type="submit">Submit</button>
+            <input id="header" name="header" placeholder="pk">
+            <button type="submit">Send</button>
+            <div id="bodyRequest">
+                <h3> Body</h3>
+                <textarea placeholder="input valid json format here" id="jsonInput" rows="10" cols="50"></textarea>
+            </div>
         </form>
+        <div id="response">
+        <h3> Response </h3>
         <p id="jsonData"></p>
+        </div>
 <script>
             document.getElementById("form").addEventListener("submit", async function(event) {
-            event.preventDefault(); // Prevent the form from submitting normally
+            event.preventDefault(); 
             const method = document.getElementById("method").value;
             const product = document.getElementById("product").value;
             const pk = document.getElementById("header").value;
