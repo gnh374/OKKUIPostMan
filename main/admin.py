@@ -16,4 +16,5 @@ admin.site.register(Acara)
 admin.site.register(Sponsor)
 admin.site.register(Pembicara)
 admin.site.register(Perusahaan)
+admin.site.register(Mahasiswa)
 

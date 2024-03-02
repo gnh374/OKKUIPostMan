@@ -40,12 +40,18 @@
             width: 90%; 
             margin: 10px auto;
         }
-        p{
+        #jsonData{
             border: 1px solid black;
             height: 100%;
             width: 100%; 
             text-align: left;
            
+        }
+        #jsonData {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: monospace;
+            overflow: auto;
         }
     </style>
     <meta charset="UTF-8">
@@ -84,12 +90,12 @@
             <button type="submit">Send</button>
             <div id="bodyRequest">
                 <h3> Body</h3>
-                <textarea placeholder="input valid json format here" id="jsonInput" rows="10" cols="50"></textarea>
+                <textarea placeholder="input valid json format" id="jsonInput" rows="10" cols="50"></textarea>
             </div>
         </form>
         <div id="response">
         <h3> Response </h3>
-        <p id="jsonData"></p>
+        <div id="jsonData"></div>
         </div>
 <script>
             document.getElementById("form").addEventListener("submit", async function(event) {
@@ -98,8 +104,8 @@
             const product = document.getElementById("product").value;
             const pk = document.getElementById("header").value;
             if(method=="GET"){
-                const jsonData = await getJsonData(product);
-                document.getElementById("jsonData").textContent = JSON.stringify(jsonData, null, 2);
+                const jsonData = await getJsonData(product, pk);
+                document.getElementById("jsonData").innerText = JSON.stringify(jsonData, null, 4);
             }
             else if (method=="POST"){
                 if (product=="Acara"){
@@ -132,15 +138,15 @@
                 else if (product=="Rapat"){
                     addRapat()
                 }
-            }
-            else if (method=="PUT"){
-                if (product=="Absen_Mentoring"){
-                    hadirMentoring()
+                else if (product=="Absen_Mentoring"){
+                    hadirMentoring(pk)
                 }
                 else if (product=="Add_Pembicara"){
-                    addPembicaraAcara()
+                    addPembicaraAcara(pk)
                 }
-                else if (product=="Acara"){
+            }
+            else if (method=="PUT"){
+                if (product=="Acara"){
                     putAcara(pk)
                 }
                 else if (product=="Mentor"){
@@ -148,6 +154,18 @@
                 }
                 else if (product=="Mentee"){
                     putMentee(pk)
+                }
+                else if (product=="BPH"){
+                    putBPH(pk)
+                }
+                else if (product=="Sponsor"){
+                    putSponsor(pk)
+                }
+                else if (product=="Mentoring"){
+                    putMentoring(pk)
+                }
+                else if (product=="PI"){
+                    putPI(pk)
                 }
             }
             else if (method=="DELETE"){
@@ -160,12 +178,30 @@
                 else if (product=="Mentee"){
                     deleteMentee(pk)
                 }
+                else if (product=="BPH"){
+                    deleteBPH(pk)
+                }
+                else if (product=="Sponsor"){
+                    deleteSponsor(pk)
+                }
+                else if (product=="Mentoring"){
+                    deleteMentoring(pk)
+                }
+                else if (product=="Absen_Mentoring"){
+                    deleteHadirMentoring(pk)
+                }
+                else if (product=="Add_Pembicara"){
+                    deletePembicara(pk)
+                }
+                else if (product=="PI"){
+                    deletePI(pk)
+                }
             }
            
         });
         
         function addAcara() {
-            fetch("{% url 'main:post_acara' %}", {
+            fetch("{% url 'main:acara' %}", {
                 method: "POST",
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
@@ -182,11 +218,11 @@
                 console.error('Terjadi kesalahan: ', error);
             });
 
-            document.getElementById("form").reset()
+            // 
             return false
         }
         function addMentee() {
-            fetch("{% url 'main:post_mentee' %}", {
+            fetch("{% url 'main:mentee' %}", {
                 method: "POST",
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
@@ -203,11 +239,11 @@
                 console.error('Terjadi kesalahan: ', error);
             });
 
-            document.getElementById("form").reset()
+            // 
             return false
         }
         function addKelompok() {
-            fetch("{% url 'main:post_kelompok' %}", {
+            fetch("{% url 'main:kelompok' %}", {
                 method: "POST",
             }).then(response => {
                 if (response.ok) {
@@ -223,12 +259,12 @@
                 console.error('Terjadi kesalahan:', error);
             });
 
-            document.getElementById("form").reset()
+            
             return false
         }
         
         function addMentoring() {
-            fetch("{% url 'main:post_mentoring' %}", {
+            fetch("{% url 'main:mentoring' %}", {
                 method: "POST",
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
@@ -245,11 +281,11 @@
                 console.error('Terjadi kesalahan:', error);
             });
 
-            document.getElementById("form").reset()
+            
             return false
         }
         function addRapat() {
-            fetch("{% url 'main:post_rapat' %}", {
+            fetch("{% url 'main:rapat' %}", {
                 method: "POST",
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
@@ -266,12 +302,12 @@
                 console.error('Terjadi kesalahan:', error);
             });
 
-            document.getElementById("form").reset()
+            
             return false
         }
         
         function addSponsor() {
-            fetch("{% url 'main:post_sponsor' %}", {
+            fetch("{% url 'main:sponsor' %}", {
                 method: "POST",
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
@@ -288,13 +324,13 @@
                 console.error('Terjadi kesalahan:', error);
             });
 
-            document.getElementById("form").reset()
+            
             return false
         }
 
      
         function addPI() {
-            fetch("{% url 'main:post_PI' %}", {
+            fetch("{% url 'main:pengurus_inti' %}", {
                 method: "POST",
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
@@ -311,11 +347,11 @@
                 console.error('Terjadi kesalahan:', error);
             });
 
-            document.getElementById("form").reset()
+            
             return false
         }
         function addBPH() {
-            fetch("{% url 'main:post_BPH' %}", {
+            fetch("{% url 'main:bph' %}", {
                 method: "POST",
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
@@ -332,11 +368,11 @@
                 console.error('Terjadi kesalahan:', error);
             });
 
-            document.getElementById("form").reset()
+            // 
             return false
         }
         function addMentor() {
-            fetch("{% url 'main:post_mentor' %}", {
+            fetch("{% url 'main:mentor' %}", {
                 method: "POST",
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
@@ -353,14 +389,14 @@
                 console.error('Terjadi kesalahan:', error);
             });
 
-            document.getElementById("form").reset()
+            
             return false
             
         }
         
-        function hadirMentoring() {
-            fetch("{% url 'main:hadir_mentoring' %}", {
-                method: "PUT",
+        function hadirMentoring(header) {
+            fetch(`api/hadir-mentoring/${header}`, {
+                method: "POST",
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
                 if (response.ok) {
@@ -376,14 +412,14 @@
                 console.error('Terjadi kesalahan:', error);
             });
 
-            document.getElementById("form").reset()
+            
             return false
             
         }
 
-        function addPembicaraAcara() {
-            fetch("{% url 'main:add_pembicara' %}", {
-                method: "PUT",
+        function addPembicaraAcara(header) {
+            fetch(`api/add-pembicara/${header}`, {
+                method: "POST",
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
                 if (response.ok) {
@@ -399,12 +435,12 @@
                 console.error('Terjadi kesalahan:', error);
             });
 
-            document.getElementById("form").reset()
+            
             return false
             
         }
         function putAcara(acara) {
-            fetch(`api/acara/put/${acara}/`, {
+            fetch(`api/acara/${acara}`, {
                 method: "PUT",
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
@@ -421,12 +457,12 @@
                 console.error('Terjadi kesalahan:', error);
             });
 
-            document.getElementById("form").reset()
+            
             return false
             
         }
         function putMentor(npm) {
-            fetch(`api/mentor/put/${npm}/`, {
+            fetch(`api/mentor/${npm}`, {
                 method: "PUT",
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
@@ -443,12 +479,57 @@
                 console.error('Terjadi kesalahan:', error);
             });
 
-            document.getElementById("form").reset()
+            
+            return false
+            
+        }
+        function putPI(header) {
+            fetch(`api/pi/${header}`, {
+                method: "PUT",
+                body: document.querySelector('#jsonInput').value
+            }).then(response => {
+                if (response.ok) {
+                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                } else {
+                    return response.json().then(data => {
+                    throw new Error(data.error);
+            });
+                }
+            }).then(data => {
+                document.getElementById("jsonData").textContent = JSON.stringify(data, null, 2); 
+            }).catch(error => {
+                console.error('Terjadi kesalahan:', error);
+            });
+
+            
+            return false
+            
+        }
+        function putSponsor(header) {
+            console.log("masuk")
+            fetch(`api/sponsor/${header}`, {
+                method: "PUT",
+                body: document.querySelector('#jsonInput').value
+            }).then(response => {
+                if (response.ok) {
+                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                } else {
+                    return response.json().then(data => {
+                    throw new Error(data.error);
+            });
+                }
+            }).then(data => {
+                document.getElementById("jsonData").textContent = JSON.stringify(data, null, 2); 
+            }).catch(error => {
+                console.error('Terjadi kesalahan:', error);
+            });
+
+            
             return false
             
         }
         function putMentee(npm) {
-            fetch(`api/mentee/put/${npm}/`, {
+            fetch(`api/mentee/${npm}`, {
                 method: "PUT",
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
@@ -465,12 +546,57 @@
                 console.error('Terjadi kesalahan:', error);
             });
 
-            document.getElementById("form").reset()
+            document.getElementById("form").rest()
+            return false
+            
+        }
+
+        function putBPH(npm) {
+            fetch(`api/bph/${npm}`, {
+                method: "PUT",
+                body: document.querySelector('#jsonInput').value
+            }).then(response => {
+                if (response.ok) {
+                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                } else {
+                    return response.json().then(data => {
+                    throw new Error(data.error);
+            });
+                }
+            }).then(data => {
+                document.getElementById("jsonData").textContent = JSON.stringify(data, null, 2); 
+            }).catch(error => {
+                console.error('Terjadi kesalahan:', error);
+            });
+
+            
+            return false
+            
+        }
+        function putMentoring(header) {
+            fetch(`api/mentoring/${header}`, {
+                method: "PUT",
+                body: document.querySelector('#jsonInput').value
+            }).then(response => {
+                if (response.ok) {
+                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                } else {
+                    return response.json().then(data => {
+                    throw new Error(data.error);
+            });
+                }
+            }).then(data => {
+                document.getElementById("jsonData").textContent = JSON.stringify(data, null, 2); 
+            }).catch(error => {
+                console.error('Terjadi kesalahan:', error);
+            });
+
+            
             return false
             
         }
         function deleteAcara(acara) {
-            fetch(`api/acara/delete/${acara}/`, {
+            fetch(`api/acara/${acara}`, {
                 method: "DELETE",
             }).then(response => {
                 if (response.ok) {
@@ -486,12 +612,97 @@
                 console.error('Terjadi kesalahan:', error);
             });
 
-            document.getElementById("form").reset()
+            
+            return false
+            
+        }
+        function deleteMentoring(acara) {
+            fetch(`api/mentoring/${acara}`, {
+                method: "DELETE",
+            }).then(response => {
+                if (response.ok) {
+                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                } else {
+                    return response.json().then(data => {
+                    throw new Error(data.error);
+            });
+                }
+            }).then(data => {
+                document.getElementById("jsonData").textContent = JSON.stringify(data, null, 2); 
+            }).catch(error => {
+                console.error('Terjadi kesalahan:', error);
+            });
+
+            
+            return false
+            
+        }
+        function deleteSponsor(header) {
+            fetch(`api/sponsor/${header}`, {
+                method: "DELETE",
+            }).then(response => {
+                if (response.ok) {
+                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                } else {
+                    return response.json().then(data => {
+                    throw new Error(data.error);
+            });
+                }
+            }).then(data => {
+                document.getElementById("jsonData").textContent = JSON.stringify(data, null, 2); 
+            }).catch(error => {
+                console.error('Terjadi kesalahan:', error);
+            });
+
+            
+            return false
+            
+        }
+        function deletePembicara(header) {
+            fetch(`api/add-pembicara/${header}`, {
+                method: "DELETE",
+                body:document.getElementById("jsonInput").value
+            }).then(response => {
+                if (response.ok) {
+                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                } else {
+                    return response.json().then(data => {
+                    throw new Error(data.error);
+            });
+                }
+            }).then(data => {
+                document.getElementById("jsonData").textContent = JSON.stringify(data, null, 2); 
+            }).catch(error => {
+                console.error('Terjadi kesalahan:', error);
+            });
+
+            
+            return false
+            
+        }
+        function deletePI(header) {
+            fetch(`api/pi/${header}`, {
+                method:'DELETE'
+            }).then(response => {
+                if (response.ok) {
+                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                } else {
+                    return response.json().then(data => {
+                    throw new Error(data.error);
+            });
+                }
+            }).then(data => {
+                document.getElementById("jsonData").textContent = JSON.stringify(data, null, 2); 
+            }).catch(error => {
+                console.error('Terjadi kesalahan:', error);
+            });
+
+            
             return false
             
         }
         function deleteMentee(npm) {
-            fetch(`api/mentee/delete/${npm}/`, {
+            fetch(`api/mentee/${npm}`, {
                 method: "DELETE",
             }).then(response => {
                 if (response.ok) {
@@ -507,12 +718,33 @@
                 console.error('Terjadi kesalahan:', error);
             });
 
-            document.getElementById("form").reset()
+            
+            return false
+            
+        }
+        function deleteBPH(npm) {
+            fetch(`api/bph/${npm}`, {
+                method: "DELETE",
+            }).then(response => {
+                if (response.ok) {
+                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                } else {
+                    return response.json().then(data => {
+                    throw new Error(data.error);
+            });
+                }
+            }).then(data => {
+                document.getElementById("jsonData").textContent = JSON.stringify(data, null, 2); 
+            }).catch(error => {
+                console.error('Terjadi kesalahan:', error);
+            });
+
+            
             return false
             
         }
         function deleteMentor(npm) {
-            fetch(`api/mentor/delete/${npm}/`, {
+            fetch(`api/mentor/${npm}`, {
                 method: "DELETE",
             }).then(response => {
                 if (response.ok) {
@@ -528,15 +760,35 @@
                 console.error('Terjadi kesalahan:', error);
             });
 
-            document.getElementById("form").reset()
+            return false
+            
+        }
+        function deleteHadirMentoring(header) {
+            fetch(`api/hadir-mentoring/${header}`, {
+                method: "DELETE",
+                body: document.querySelector('#jsonInput').value
+            }).then(response => {
+                if (response.ok) {
+                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                } else {
+                    return response.json().then(data => {
+                    throw new Error(data.error);
+            });
+                }
+            }).then(data => {
+                document.getElementById("jsonData").textContent = JSON.stringify(data, null, 2); 
+            }).catch(error => {
+                console.error('Terjadi kesalahan:', error);
+            });
+
             return false
             
         }
 
-       
+        
 
 
-        async function getJsonData(product) {
+        async function getJsonData(product,pk) {
             if (product=="Mentor"){
                 return getMentors()
             }
@@ -562,7 +814,10 @@
                 return getSponsor()
             }
             else if (product=="Mentoring"){
-                const result= await getMetoring(pk)
+                if(pk==""){
+                    return getMetoring()
+                }
+                const result= await getMetoring_kelompok(pk)
                 return result
                 
             }
@@ -571,20 +826,29 @@
                 return result
                 
             }
-            
+            // else if (product=="Absen_Mentoring"){
+            //     const result= await getHadirMentoring(pk)
+            //     return result
+                
+            // }
+            // else if (product=="Add_Pembicara"){
+            //     const result= await getHadirMentoring(pk)
+            //     return result
+                
+            // }
         
         }
-        async function getMentors() { return fetch(`api/mentor/get/`).then((res) => res.json()) }
-        async function getMentees() { return fetch(`api/mentee/get/`).then((res) => res.json()) }
-        async function getAcara() { return fetch(`api/acara/get/`).then((res) => res.json()) }
-        async function getPI() { return fetch(`api/PI/get/`).then((res) => res.json()) }
-        async function getBPH() { return fetch(`api/BPH/get/`).then((res) => res.json()) }
-        async function getPanitia() { return fetch(`api/panitia/get/`).then((res) => res.json()) }
-        async function getKelompok() { return fetch(`api/kelompok/get/`).then((res) => res.json()) }
-        async function getSponsor() { return fetch(`api/sponsor/get/`).then((res) => res.json()) }
-
-        async function getMetoring(kelompok) {
-            return fetch(`api/mentoring/get/${kelompok}/`, {
+        async function getMentors() { return fetch(`api/mentor/`).then((res) => res.json()) }
+        async function getMentees() { return fetch(`api/mentee/`).then((res) => res.json()) }
+        async function getAcara() { return fetch(`api/acara/`).then((res) => res.json()) }
+        async function getPI() { return fetch(`api/pi/`).then((res) => res.json()) }
+        async function getBPH() { return fetch(`api/bph/`).then((res) => res.json()) }
+        async function getPanitia() { return fetch(`api/panitia/`).then((res) => res.json()) }
+        async function getKelompok() { return fetch(`api/kelompok/`).then((res) => res.json()) }
+        async function getSponsor() { return fetch(`api/sponsor/`).then((res) => res.json()) }
+        async function getMetoring() { return fetch(`api/mentoring/`).then((res) => res.json()) }
+        async function getMetoring_kelompok(kelompok) {
+            return fetch(`api/mentoring/${kelompok}`, {
                 method: "GET",
             }).then(response => {
                 if (response.ok) {
@@ -595,10 +859,24 @@
             }).catch(error => {
                 console.error('Terjadi kesalahan:', error);
             });
-           
+            
+        }
+        async function getHadirMentoring(header) {
+            return fetch(`api/hadir-mentoring/${header}`, {
+                method: "GET",
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Gagal mengambil data');
+                }
+            }).catch(error => {
+                console.error('Terjadi kesalahan:', error);
+            });
+            
         }
         async function getRapat(divisi) {
-            return fetch(`api/rapat/get/${divisi}/`, {
+            return fetch(`api/rapat/${divisi}`, {
                 method: "GET",
             }).then(response => {
                 if (response.ok) {
