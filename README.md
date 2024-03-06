@@ -570,4 +570,15 @@ Pembukaan OKK UI/RISTEK/
 ```
 
 
+Untuk menambahkan divisi PI, divisi BPH, pembicara, dan perusahaan.
+
+Akses laman di bawah ini
+```bash
+http://localhost:8000/admin/
+```
+
+login dengan:
+
+username: admin11
+password:abcde123
 
