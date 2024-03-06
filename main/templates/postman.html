@@ -73,20 +73,22 @@
             <h4>http://localhost:8000/</h4>
             <select id="product" name="product">
                 <option>Select an option</option>
-                <option value="Acara">Acara</option>
-                <option value="PI">PI</option>
-                <option value="BPH">BPH</option>
-                <option value="Panitia">Panitia</option>
-                <option value="Mentor">Mentor</option>
-                <option value="Kelompok">Kelompok</option>
-                <option value="Mentee">Mentee</option>
-                <option value="Mentoring">Mentoring</option>
-                <option value="Absen_Mentoring">Absen Mentoring</option>
-                <option value="Sponsor">Sponsor</option>
-                <option value="Add_Pembicara">Add Pembicara</option>
-                <option value="Rapat">Rapat</option>
+                <option value="Acara">api/acara/</option>
+                <option value="Add_Pembicara">api/add-pembicara/</option>
+                <option value="Sponsor">api/sponsor/</option>
+                <option value="Panitia">api/panitia/</option>
+                <option value="PI">api/pi/</option>
+                <option value="BPH">api/bph/</option>
+                <option value="Rapat">api/rapat/</option>
+                <option value="Kelompok">api/kelompok/</option>
+                <option value="Mentor">api/mentor/</option>
+                <option value="Mentee">api/mentee/</option>
+                <option value="Mentoring">api/mentoring/</option>
+                <option value="Absen_Mentoring">api/hadir-mentoring/</option>
+     
+        
             </select>
-            <input id="header" name="header" placeholder="pk">
+            <input id="header" name="header" placeholder="param">
             <button type="submit">Send</button>
             <div id="bodyRequest">
                 <h3> Body</h3>
@@ -206,7 +208,7 @@
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -227,7 +229,7 @@
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -247,7 +249,7 @@
                 method: "POST",
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -269,7 +271,7 @@
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -290,7 +292,7 @@
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -312,7 +314,7 @@
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -335,7 +337,7 @@
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -356,7 +358,7 @@
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -367,8 +369,6 @@
             }).catch(error => {
                 console.error('Terjadi kesalahan:', error);
             });
-
-            // 
             return false
         }
         function addMentor() {
@@ -377,7 +377,7 @@
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -400,7 +400,7 @@
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -423,7 +423,7 @@
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -445,7 +445,7 @@
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -467,7 +467,7 @@
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -489,7 +489,7 @@
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -512,7 +512,7 @@
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -534,7 +534,7 @@
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -557,7 +557,7 @@
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -579,7 +579,7 @@
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -600,7 +600,7 @@
                 method: "DELETE",
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -621,7 +621,7 @@
                 method: "DELETE",
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -642,7 +642,7 @@
                 method: "DELETE",
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -664,7 +664,7 @@
                 body:document.getElementById("jsonInput").value
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -685,7 +685,7 @@
                 method:'DELETE'
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -706,7 +706,7 @@
                 method: "DELETE",
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -727,7 +727,7 @@
                 method: "DELETE",
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -748,7 +748,7 @@
                 method: "DELETE",
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
@@ -769,7 +769,7 @@
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
                 if (response.ok) {
-                    return response.json(); // Mengembalikan promise untuk menguraikan respons JSON
+                    return response.json(); 
                 } else {
                     return response.json().then(data => {
                     throw new Error(data.error);
