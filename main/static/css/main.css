@@ -11,8 +11,8 @@ h3{
 }
 #jsonInput {
     margin: 10px auto;
-    width: 100%; /* Make the textarea fill the width of the form */
-    height: 30vh; /* 50% of the viewport height */
+    width: 100%; 
+    height: 30vh; 
 }
 #method{
     width: 10%;

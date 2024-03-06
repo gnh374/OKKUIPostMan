@@ -726,16 +726,6 @@ async function getJsonData(product,pk) {
         return result
         
     }
-    // else if (product=="Absen_Mentoring"){
-    //     const result= await getHadirMentoring(pk)
-    //     return result
-        
-    // }
-    // else if (product=="Add_Pembicara"){
-    //     const result= await getHadirMentoring(pk)
-    //     return result
-        
-    // }
 
 }
 async function getMentors() { return fetch(`api/mentor/`).then((res) => res.json()) }

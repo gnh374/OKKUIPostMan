@@ -7,7 +7,6 @@ from django.core import serializers
 from main.models import *
 from django.views.decorators.csrf import csrf_exempt
 from django.core.serializers import serialize
-from main.forms import *
 from dateutil.parser import isoparse
 
 def show_main(request):  
