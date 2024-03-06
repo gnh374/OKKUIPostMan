@@ -1,0 +1,50 @@
+#form{
+    width: 90%;
+    margin: auto;
+}
+body{
+    text-align: center;
+}
+h3{
+    text-align: left;
+ 
+}
+#jsonInput {
+    margin: 10px auto;
+    width: 100%; /* Make the textarea fill the width of the form */
+    height: 30vh; /* 50% of the viewport height */
+}
+#method{
+    width: 10%;
+    height:20px;
+}
+#product{
+    width: 10%;
+    height:20px; 
+}
+#header{
+    width: 20%; 
+    height:15px;
+}
+h4{
+    display: inline;
+    width:45%
+}
+#response{
+    height: 70vh;
+    width: 90%; 
+    margin: 10px auto;
+}
+#jsonData{
+    border: 1px solid black;
+    height: 100%;
+    width: 100%; 
+    text-align: left;
+   
+}
+#jsonData {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: monospace;
+    overflow: auto;
+}
