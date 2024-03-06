@@ -140,12 +140,8 @@
                 else if (product=="Rapat"){
                     addRapat()
                 }
-                else if (product=="Absen_Mentoring"){
-                    hadirMentoring(pk)
-                }
-                else if (product=="Add_Pembicara"){
-                    addPembicaraAcara(pk)
-                }
+               
+               
             }
             else if (method=="PUT"){
                 if (product=="Acara"){
@@ -168,6 +164,12 @@
                 }
                 else if (product=="PI"){
                     putPI(pk)
+                }
+                else if (product=="Add_Pembicara"){
+                    addPembicaraAcara(pk)
+                }
+                else if (product=="Absen_Mentoring"){
+                    hadirMentoring(pk)
                 }
             }
             else if (method=="DELETE"){
@@ -396,7 +398,7 @@
         
         function hadirMentoring(header) {
             fetch(`api/hadir-mentoring/${header}`, {
-                method: "POST",
+                method: "PUT",
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
                 if (response.ok) {
@@ -419,7 +421,7 @@
 
         function addPembicaraAcara(header) {
             fetch(`api/add-pembicara/${header}`, {
-                method: "POST",
+                method: "PUT",
                 body: document.querySelector('#jsonInput').value
             }).then(response => {
                 if (response.ok) {

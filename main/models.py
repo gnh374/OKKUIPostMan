@@ -79,8 +79,7 @@ class Acara(models.Model):
 
 class Perusahaan(models.Model):
     nama = models.CharField(max_length = 255, primary_key=True, blank = False)
-    def __str__(self):
-        return self.nama
+
     
 class Sponsor(models.Model):
     acara = models.ForeignKey(Acara,  on_delete=models.CASCADE , blank = False)

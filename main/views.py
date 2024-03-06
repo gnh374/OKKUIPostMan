@@ -60,9 +60,10 @@ def acara(request):
                     raise Exception("Nama acara tidak boleh kosong")
                 elif Acara.objects.filter(nama=nama).exists():
                     raise Exception("Nama acara sudah ada")
+                
                 tempat = json_input.get("tempat")
-                waktu_mulai = isoparse(json_input.get("waktu"))
-                waktu_selesai = isoparse(json_input.get("waktu"))
+                waktu_mulai = isoparse(json_input.get("waktu_mulai"))
+                waktu_selesai = isoparse(json_input.get("waktu_selesai"))
                 pembicara=json_input.get("pembicara")
 
                 acara = Acara( nama=nama, tempat=tempat, waktu_mulai=waktu_mulai, waktu_selesai=waktu_selesai)
@@ -131,25 +132,28 @@ def bph_by_id(request,npm):
             divisi=bph.divisi
             list_change=[]
             for key in keys:
-                if key=="npm":
-                    raise Exception("Tidak bisa menggani NPM")
+                if key=="npm" or key=="nama":
+                    raise Exception("Tidak bisa menggani NPM atau nama")
                 if hasattr(BPH, key):
                     list_change.append(key)
 
             if "divisi" in list_change:
-                divisi=json_input.get("divisi")  
+                divisi= DivisiBPH.objects.get(nama=json_input.get("divisi"))  
                    
             for attribute in list_change:
                 if attribute=="jabatan":
                     if json_input.get(attribute)!="PJ" and json_input.get(attribute)!="WaPJ"and json_input.get(attribute)!="Staff":
                         raise Exception("Jabatan tidak valid")
+                 
                     if json_input.get(attribute)=="PJ" and BPH.objects.filter(divisi=divisi, jabatan="PJ").exists():
-                        raise Exception("Divisi ini sudah memiliki PJ")    
+                       
+                        raise Exception("Divisi ini sudah memiliki PJ")
                     elif json_input.get(attribute)=="WaPJ" and BPH.objects.filter(divisi=divisi, jabatan="WaPJ").count() == 2:
                         raise Exception("Divisi ini sudah memiliki 2 WaPJ") 
-                if attribute=="divisi":
-                    setattr(bph, attribute, DivisiBPH.objects.get(pk=json_input.get(attribute)))
-                setattr(bph, attribute, json_input.get(attribute))
+                elif attribute=="divisi":
+                    bph.divisi = divisi
+                else:
+                    setattr(bph, attribute, json_input.get(attribute))
 
             bph.save()
             return HttpResponse(serializers.serialize('json', [bph]))
@@ -320,8 +324,9 @@ def sponsor_by_id(request,acara, perusahaan):
                      
             for attribute in list_change:
                 if attribute=="acara":
-                    setattr(sponsor, attribute, Acara.objects.get(pk=json_input.get(attribute)) )
+                    raise Exception("Tidak bisa mengganti acara yang disponsori")
                 elif attribute=="perusahaan":
+                    raise Exception("Tidak bisa mengganti perusahaan yang mensponsori")
                     setattr(sponsor, attribute, Perusahaan.objects.get(pk=json_input.get(attribute)) )
                 if (attribute=="paket" and json_input.get(attribute)!="Gold" and json_input.get(attribute)!="Silver" and json_input.get(attribute)!="Platinum"):
                     raise Exception("Paket tidak valid")
@@ -411,7 +416,7 @@ def rapat(request):
     elif request.method == 'POST':
         try:
             json_input = json.loads(request.body)
-            divisi = DivisiBPH.objects.get(pk= json_input.get("divisi"))
+            divisi = DivisiBPH.objects.get(nama= json_input.get("divisi"))
             waktu =  isoparse(json_input.get("waktu"))
             tempat = json_input.get("tempat")
             kesimpulan = json_input.get("kesimpulan")
@@ -434,13 +439,7 @@ def rapat_by_divisi(request, divisi):
 
 @csrf_exempt
 def hadir_mentoring(request, kelompok, materi):
-    # if request.method == 'GET':
-    #     mentoring = Mentoring.objects.get(kelompok=Kelompok.objects.get(pk=kelompok), materi=materi)
-    #     concrete_model = mentoring._meta.concrete_model
-    #     hadir = concrete_model.hadir
-    #     return HttpResponse(serializers.serialize('json', [hadir]))
-
-    if request.method == 'POST':
+    if request.method == 'PUT':
         try:
             json_input = json.loads(request.body)
             npm = json_input.get("npm")
@@ -468,10 +467,7 @@ def hadir_mentoring(request, kelompok, materi):
 
 @csrf_exempt
 def add_pembicara(request, acara):
-    # if request.method=='GET':
-    #     acara = Acara.objects.get(pk=acara)
-    #     return HttpResponse(serializers.serialize('json', [acara.pembicara]))
-    if request.method == 'POST':
+    if request.method == 'PUT':
         try:
             json_input = json.loads(request.body)
             pembicara = Pembicara.objects.get(pk=json_input.get("pembicara"))
@@ -530,8 +526,8 @@ def PI_by_id(request,npm):
             keys = json_input.keys()
             list_change=[]
             for key in keys:
-                if key=="npm":
-                    raise Exception("Tidak bisa mengganti NPM")
+                if key=="npm" or key=="nama":
+                    raise Exception("Tidak bisa mengganti identitas")
                 elif hasattr(PengurusInti, key):
                     list_change.append(key)  
    
